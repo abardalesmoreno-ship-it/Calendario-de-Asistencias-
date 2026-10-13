@@ -28,7 +28,7 @@ header{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wra
 .info span{display:block;font-size:11px;color:var(--mu);text-transform:uppercase}.info b{font-size:14px}
 .tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
 th{background:var(--hd);text-align:left;font-size:11px;text-transform:uppercase;color:var(--mu);padding:8px}td{padding:8px;border-top:1px solid var(--bd)}
-td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+td i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:#000;border:1px solid #8a8a90}
 .pc{font-weight:700}.p{color:var(--ok)}.t{color:var(--wa)}.f{color:var(--ko)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 6px}.nav h2{margin:0;font-size:18px}
 .gr{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding:6px 10px 10px;min-width:560px}
@@ -86,7 +86,7 @@ function resumen(){
  document.getElementById('tb2').innerHTML=C.map(function(c,i){
   var p=0,t=0,f=0,h=0;ses(i).forEach(function(d){if(d<=HOY){var e=est(d,i).s;if(e=='p'){p++;h++}else if(e=='t'){t++;h++}else if(e=='f'){f++;h++}}});
   var pc=h?Math.round((p+t)/h*100):100;
-  return '<tr><td>'+c.c+'</td><td><i style="background:'+c.k+'"></i><b>'+c.n+'</b></td><td>'+c.sec+'</td><td>'+c.cr+'</td><td>'+c.d.map(function(x){return DIA[x]}).join('/')+' '+(c.bl||c.h)+'</td><td class="p">'+p+'</td><td class="t">'+t+'</td><td class="f">'+f+'</td></tr>'}).join('');}
+  return '<tr><td>'+c.c+'</td><td><b>'+c.n+'</b></td><td>'+c.sec+'</td><td>'+c.cr+'</td><td>'+c.d.map(function(x){return DIA[x]}).join('/')+' '+(c.bl||c.h)+'</td><td class="p">'+p+'</td><td class="t">'+t+'</td><td class="f">'+f+'</td></tr>'}).join('');}
 function cal(){
  document.getElementById('mt').textContent=MES[mi]+' 2026';
  document.getElementById('pv').disabled=mi==0;document.getElementById('nx').disabled=mi==3;
