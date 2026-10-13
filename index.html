@@ -75,11 +75,12 @@ var C=[
 var N=new Date(),HOY=new Date(N.getFullYear(),N.getMonth(),N.getDate()),INI=new Date(2026,7,3),FIN=new Date(2026,10,21),MES=['Agosto','Septiembre','Octubre','Noviembre'],mi=HOY<INI?0:HOY>FIN?3:HOY.getMonth()-7,ov={};try{ov=JSON.parse(localStorage.getItem("asist")||"{}")}catch(x){}
 function guardar(){try{localStorage.setItem("asist",JSON.stringify(ov))}catch(x){}}
 function key(d,i){return d.getMonth()+'-'+d.getDate()+'-'+i}
-var SP={'7-19-0':'f','8-24-0':'f','7-5-0':'x','7-6-2':'x'};
+var SP={'7-19-0':'f','8-24-0':'f','8-2-0':'f','9-1-0':'f','7-5-0':'x','7-6-0':'x','7-6-2':'x'};
 function est(d,i){
- var k=key(d,i);if(d>HOY)return{s:'g'};if(ov[k]=='x')return{s:'x'};if(ov[k])return{s:ov[k],m:8};
- if(d<=new Date(2026,9,13))return{s:SP[k]||'p'};
- return d.getTime()==HOY.getTime()?{s:'h'}:{s:'x'};}
+ var k=key(d,i),mo=d.getMonth(),da=d.getDate();if(d>HOY)return{s:'g'};if(ov[k]=='x')return{s:'x'};if(ov[k])return{s:ov[k],m:8};
+ if(mo==9&&da==8)return{s:'x',fe:1};
+ if(i==0&&mo==8&&(da==9||da==24))return{s:'f'};
+ return{s:'p'};}
 function ses(i){var a=[];for(var d=new Date(INI);d<=FIN;d.setDate(d.getDate()+1))if(C[i].d.indexOf(d.getDay())>-1)a.push(new Date(d));return a}
 function resumen(){
  document.getElementById('tb2').innerHTML=C.map(function(c,i){
@@ -95,7 +96,7 @@ function cal(){
  for(var day=1;day<=n;day++){
   var d=new Date(2026,m,day),fu=d<INI||d>FIN,ch='';
   if(!fu&&m!=10)C.map(function(c,i){return{c:c,i:i}}).filter(function(o){return o.c.d.indexOf(d.getDay())>-1}).sort(function(a,b){return a.c.h<b.c.h?-1:1}).forEach(function(o){var c=o.c,i=o.i;var e=est(d,i),
-   tx={x:'Sin registrar',p:'✔ Asistió',t:'⏱ Tardanza +'+e.m+'′',f:'✖ Falta',g:'Programada',h:'Hoy · por registrar'}[e.s];
+   tx={x:e.fe?'Feriado':'Sin registrar',p:'✔ Asistió',t:'⏱ Tardanza +'+e.m+'′',f:'✖ Falta',g:'Programada',h:'Hoy · por registrar'}[e.s];
    ch+='<button class="ch '+e.s+'" style="--k:'+c.k+'" data-d="'+d.getTime()+'" data-i="'+i+'"><b>'+c.s+'</b><br>'+c.h+'<br>'+tx+'</button>'});
   g+='<div class="d'+(fu?' o':'')+(d.getTime()==HOY.getTime()?' td':'')+'"><span>'+day+'</span>'+ch+'</div>';}
  document.getElementById('gr').innerHTML=g;}
